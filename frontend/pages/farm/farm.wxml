@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-body">
+      <view class="seal">助农帮扶</view>
+      <view class="hero-title">一单分给村里</view>
+      <view class="hero-sub">湘莲 · 茶油 · 竹编 · 剁辣椒，订单直连农户与工坊</view>
+    </view>
+  </view>
+
+  <view class="stat-card card">
+    <view class="stat-item">
+      <text class="stat-num">{{summary.farmers}}</text>
+      <text class="stat-label">合作农户</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{summary.products}}</text>
+      <text class="stat-label">助农产品</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{summary.orders}}</text>
+      <text class="stat-label">助农订单</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{summary.supportCount}}</text>
+      <text class="stat-label">累计支持</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">合作农户</text>
+        <view class="section-title">谁在做这些产品</view>
+      </view>
+    </view>
+    <view class="farmer-list">
+      <view wx:for="{{farmers}}" wx:key="id" class="farmer-card card">
+        <view class="farmer-head">
+          <image class="farmer-avatar" src="{{item.avatarSrc}}" mode="aspectFill" />
+          <view class="farmer-info">
+            <text class="farmer-name">{{item.name}}</text>
+            <text class="farmer-village">{{item.villageName}}</text>
+          </view>
+          <text class="farmer-count">{{item.supportCount}} 单</text>
+        </view>
+        <text class="farmer-intro">{{item.intro}}</text>
+        <text class="farmer-project">帮扶项目：{{item.project}}</text>
+        <view class="progress">
+          <view class="progress-inner" style="width: {{item.progress}}%"></view>
+        </view>
+        <text class="farmer-target">目标 {{item.supportTarget}} 单 · 已完成 {{item.progress}}%</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">助农好物</text>
+        <view class="section-title">湘村风物</view>
+      </view>
+      <text class="more" bindtap="goMall">去商城 ›</text>
+    </view>
+    <view wx:if="{{loading}}" class="empty">加载中…</view>
+    <view wx:else class="product-list">
+      <view wx:for="{{products}}" wx:key="id" class="product-card card" data-id="{{item.id}}" bindtap="onProduct">
+        <image class="product-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <text class="product-summary">{{item.summary}}</text>
+          <view class="product-foot">
+            <text class="price">{{item.priceText}}</text>
+            <text class="product-farmer">{{item.farmerName}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

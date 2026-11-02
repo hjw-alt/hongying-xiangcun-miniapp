@@ -1,0 +1,45 @@
+<view class="page">
+  <view class="manage-hero stage">
+    <image class="manage-hero-bg" src="{{heroImage}}" mode="aspectFill" />
+    <view class="manage-hero-veil"></view>
+    <view class="manage-hero-body">
+      <view class="seal">创作管理</view>
+      <view class="manage-title">管理作品</view>
+      <view class="manage-sub">修改、下架或重新整理你投到影绘廊的作品</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view class="toolbar">
+      <input value="{{keyword}}" placeholder="搜索作品" bindinput="onKeywordInput" bindconfirm="onSearch" />
+      <button size="mini" bindtap="onSearch">查询</button>
+    </view>
+    <view class="chip-row margin-top">
+      <view
+        wx:for="{{themes}}"
+        wx:key="*this"
+        class="chip {{theme === item ? 'active' : ''}}"
+        data-theme="{{item}}"
+        bindtap="onThemeSelect"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">正在加载...</view>
+  <view wx:elif="{{artworks.length === 0}}" class="empty">暂无可管理作品</view>
+
+  <view wx:else class="admin-list">
+    <view wx:for="{{artworks}}" wx:key="id" class="admin-row">
+      <image src="{{item.coverUrl}}" data-id="{{item.id}}" bindtap="onDetail" mode="aspectFill" />
+      <view class="row-body">
+        <view class="row-title" data-id="{{item.id}}" bindtap="onDetail">{{item.title}}</view>
+        <view class="row-sub">{{item.author}} · {{item.theme}} · {{item.likes}} 赞</view>
+        <view class="row-sub">{{item.createdAtText}}</view>
+        <view class="row-actions">
+          <button size="mini" data-id="{{item.id}}" bindtap="onEdit">编辑</button>
+          <button size="mini" data-id="{{item.id}}" data-title="{{item.title}}" bindtap="onDelete">删除</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,115 @@
+<view class="page">
+  <view class="gallery-hero stage">
+    <image class="gallery-hero-bg" src="{{heroImage}}" mode="aspectFill" />
+    <view class="gallery-hero-veil"></view>
+    <view class="gallery-hero-glow glow"></view>
+    <view class="gallery-hero-body">
+      <view class="seal">湘潭非遗 · 青年共创</view>
+      <view class="gallery-title">影绘廊</view>
+      <view class="gallery-sub">临摹影偶、记录戏台、重述故事，让纸影戏在绘画里继续亮灯。</view>
+    </view>
+    <view class="gallery-stats">
+      <view class="gallery-stat">
+        <text class="number">{{stats.artworkTotal}}</text>
+        <text class="label">作品</text>
+      </view>
+      <view class="gallery-stat">
+        <text class="number">{{stats.likeTotal}}</text>
+        <text class="label">喝彩</text>
+      </view>
+      <view class="gallery-stat">
+        <text class="number">{{stats.puppetTotal}}</text>
+        <text class="label">纸影</text>
+      </view>
+      <view class="gallery-stat">
+        <text class="number">{{stats.impressTotal}}</text>
+        <text class="label">湘潭</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="workbench">
+    <view class="search-bar">
+      <input value="{{keyword}}" placeholder="搜索标题 / 作者 / 标签" bindinput="onKeywordInput" bindconfirm="onSearch" confirm-type="search" />
+      <button class="ghost" size="mini" bindtap="onSearch">寻戏</button>
+    </view>
+    <scroll-view scroll-x class="filter-scroll" show-scrollbar="{{false}}">
+      <view class="chip-row">
+        <view
+          wx:for="{{themes}}"
+          wx:key="*this"
+          class="chip {{theme === item ? 'active' : ''}}"
+          data-theme="{{item}}"
+          bindtap="onThemeSelect"
+        >{{item}}</view>
+      </view>
+    </scroll-view>
+    <view class="sort-row">
+      <view class="sort-group">
+        <view
+          wx:for="{{sorts}}"
+          wx:key="key"
+          class="sort-item {{sort === item.key ? 'active' : ''}}"
+          data-sort="{{item.key}}"
+          bindtap="onSortSelect"
+        >{{item.label}}</view>
+      </view>
+      <view class="action-links">
+        <text bindtap="onRefresh">刷新</text>
+        <text bindtap="goManage">管理</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty gallery-state">作品正在取回...</view>
+  <view wx:elif="{{errorMessage}}" class="empty gallery-state">
+    <view>{{errorMessage}}</view>
+    <view class="empty-tip">请确认 Go 后端已启动</view>
+  </view>
+  <view wx:elif="{{artworks.length === 0}}" class="empty gallery-state">这个主题下还没有作品，欢迎上传第一幅。</view>
+
+  <view wx:else class="work-grid">
+    <view class="work-column">
+      <view
+        wx:for="{{leftColumn}}"
+        wx:key="id"
+        class="work-card {{item.tall ? 'work-card-tall' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onArtworkTap"
+      >
+        <image class="cover" src="{{item.coverUrl}}" mode="aspectFill" lazy-load="{{true}}" />
+        <view class="work-shade"></view>
+        <view class="theme {{item.themeClass}}">{{item.theme}}</view>
+        <view class="work-body">
+          <view class="title">{{item.title}}</view>
+          <view class="author">{{item.author}}</view>
+          <view class="card-actions">
+            <text class="meta">{{item.likes}} 人喜欢</text>
+            <view class="like" data-id="{{item.id}}" catchtap="onLikeTap">点赞</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="work-column">
+      <view
+        wx:for="{{rightColumn}}"
+        wx:key="id"
+        class="work-card {{item.tall ? 'work-card-tall' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onArtworkTap"
+      >
+        <image class="cover" src="{{item.coverUrl}}" mode="aspectFill" lazy-load="{{true}}" />
+        <view class="work-shade"></view>
+        <view class="theme {{item.themeClass}}">{{item.theme}}</view>
+        <view class="work-body">
+          <view class="title">{{item.title}}</view>
+          <view class="author">{{item.author}}</view>
+          <view class="card-actions">
+            <text class="meta">{{item.likes}} 人喜欢</text>
+            <view class="like" data-id="{{item.id}}" catchtap="onLikeTap">点赞</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

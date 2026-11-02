@@ -1,0 +1,49 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">作品正在展开...</view>
+
+  <block wx:elif="{{artwork}}">
+    <view class="art-stage">
+      <image src="{{artwork.coverUrl}}" mode="aspectFit" />
+      <view class="stage-veil"></view>
+    </view>
+
+    <view class="plate">
+      <view class="plate-top">
+        <view class="title">{{artwork.title}}</view>
+        <view class="theme {{artwork.themeClass}}">{{artwork.theme}}</view>
+      </view>
+      <view class="meta">{{artwork.author}} · 上传于 {{artwork.createdAtText}}</view>
+      <view class="description">{{artwork.description}}</view>
+      <view class="tag-row">
+        <text wx:for="{{artwork.tags}}" wx:key="*this" class="tag">{{item}}</text>
+      </view>
+      <view class="detail-actions">
+        <button class="primary" bindtap="onLike">喜欢 · {{artwork.likes}}</button>
+        <button class="{{favorited ? 'favorite active' : 'favorite'}}" bindtap="onFavorite">{{favorited ? '已收藏' : '收藏'}}</button>
+        <button bindtap="onEdit">编辑</button>
+        <button class="danger" bindtap="onDelete">删除</button>
+      </view>
+    </view>
+
+    <view class="panel comment-panel">
+      <view class="section-title">评论 · {{comments.length}}</view>
+      <view class="comment-form">
+        <input value="{{nickname}}" bindinput="onNicknameInput" placeholder="昵称（可留空）" maxlength="20" />
+      <textarea value="{{content}}" bindinput="onContentInput" placeholder="谈谈影偶纹样、光影关系，或你了解到的湘潭戏台故事。" maxlength="200" />
+        <button loading="{{submittingComment}}" disabled="{{submittingComment}}" bindtap="submitComment">发布评论</button>
+      </view>
+
+      <view wx:if="{{comments.length === 0}}" class="empty">还没有评论</view>
+      <view wx:else class="comment-list">
+        <view wx:for="{{comments}}" wx:key="id" class="comment">
+          <view class="comment-head">
+            <text class="nickname">{{item.nickname}}</text>
+            <text class="time">{{item.createdAtText}}</text>
+          </view>
+          <view class="content">{{item.content}}</view>
+          <view class="comment-action" data-id="{{item.id}}" bindtap="onDeleteComment">删除</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

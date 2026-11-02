@@ -1,0 +1,33 @@
+<view class="page medal-detail-page">
+  <view wx:if="{{loading}}" class="empty detail-empty">徽章加载中…</view>
+  <block wx:elif="{{medal}}">
+    <view class="detail-banner {{medal.unlocked ? 'unlocked' : ''}}">
+      <image class="detail-cover" src="{{medal.coverSrc || medal.iconSrc}}" mode="aspectFill" />
+      <view class="detail-cover-shade"></view>
+      <view class="detail-banner-copy">
+        <text class="detail-status">{{medal.statusText}}</text>
+        <text class="detail-name">{{medal.name}}</text>
+        <text class="detail-subtitle">{{medal.subtitle}}</text>
+      </view>
+    </view>
+    <view class="detail-card card">
+      <view class="detail-head">
+        <text class="eyebrow">徽章故事</text>
+        <text class="detail-state {{medal.unlocked ? 'on' : ''}}">{{medal.statusText}}</text>
+      </view>
+      <text class="detail-description">{{medal.description}}</text>
+      <view class="detail-rule">
+        <text class="detail-rule-label">解锁进度</text>
+        <view class="detail-progress-row">
+          <view class="progress"><view class="progress-inner" style="{{medal.progressStyle}}"></view></view>
+          <text class="detail-progress-text">{{medal.progressText}}</text>
+        </view>
+        <text class="detail-rule-tip">{{medal.unlocked ? ('点亮于 ' + medal.unlockedAtText) : ('完成目标即可点亮：' + medal.target)}}</text>
+      </view>
+      <view class="detail-note">
+        <text class="detail-note-mark">湘</text>
+        <text>研学打卡、支持助农商品、积分兑换都会记录在你的红迹成长档案里。</text>
+      </view>
+    </view>
+  </block>
+</view>

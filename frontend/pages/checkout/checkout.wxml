@@ -1,0 +1,95 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty checkout-state">加载中…</view>
+  <view wx:elif="{{empty}}" class="empty checkout-state">没有待结算的商品</view>
+  <block wx:else>
+    <view class="growth-strip card" bindtap="loadProfile">
+      <view class="growth-strip-icon">V</view>
+      <view class="growth-strip-copy">
+        <text class="growth-strip-title">{{profile.levelText}} · {{profile.levelName}} · 当前 {{profile.points}} 积分</text>
+        <text class="growth-strip-sub">完成订单后，成长经验会实时记入账户</text>
+      </view>
+    </view>
+
+    <view class="address-card card" bindtap="chooseAddress">
+      <block wx:if="{{address}}">
+        <view class="address-head">
+          <text class="address-name">{{address.receiver}}</text>
+          <text class="address-phone">{{address.phone}}</text>
+          <text wx:if="{{address.isDefault}}" class="address-badge">默认</text>
+        </view>
+        <text class="address-detail">{{address.region}} {{address.detail}}</text>
+      </block>
+      <view wx:else class="address-empty">
+        <text class="address-empty-title">还没有收货地址</text>
+        <text class="address-empty-sub">点击这里添加收货地址</text>
+      </view>
+      <text class="address-arrow">›</text>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">商品清单</text>
+      <view class="item-list">
+        <view wx:for="{{items}}" wx:key="productId" class="order-item">
+          <image class="item-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+          <view class="item-info">
+            <text class="item-name">{{item.name}}</text>
+            <text wx:if="{{item.customText}}" class="item-custom">定制：{{item.customText}}</text>
+            <text wx:if="{{item.farmerName}}" class="item-farmer">{{item.farmerName}}</text>
+            <view class="item-foot">
+              <view>
+                <text class="price">{{item.priceText}}</text>
+                <text wx:if="{{item.pointsPrice > 0}}" class="item-points">{{item.pointsPrice}} 积分可兑</text>
+              </view>
+              <text class="item-qty">× {{item.quantity}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="payment-panel panel">
+      <view class="payment-head">
+        <view>
+          <text class="eyebrow">支付与成长</text>
+          <text class="payment-title">选择订单结算方式</text>
+        </view>
+        <text class="payment-points">可用 {{profile.points}} 积分</text>
+      </view>
+      <view class="payment-switch">
+        <view class="payment-option {{paymentType === 'cash' ? 'active' : ''}}" data-type="cash" bindtap="choosePayment">
+          <text class="payment-option-title">现金购买</text>
+          <text class="payment-option-value">{{cashTotalText}}</text>
+          <text class="payment-option-sub">+{{rewardPointsTotal}} 积分 · +{{rewardExpTotal}} 经验</text>
+        </view>
+        <view class="payment-option {{paymentType === 'points' ? 'active' : ''}} {{canPayPoints ? '' : 'disabled'}}" data-type="points" bindtap="choosePayment">
+          <text class="payment-option-title">积分兑换</text>
+          <text class="payment-option-value">{{pointsTotalText}}</text>
+          <text class="payment-option-sub">{{canPayPoints ? '不花现金，也能继续成长' : paymentHint}}</text>
+        </view>
+      </view>
+      <text class="payment-hint">{{paymentHint}}</text>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">订单备注</text>
+      <textarea class="remark" value="{{remark}}" placeholder="有特殊要求可以写在这里（可留空）" maxlength="200" bindinput="onRemark" />
+    </view>
+
+    <view class="panel total-panel">
+      <view class="total-row">
+        <text>商品合计</text>
+        <text class="total-value">{{totalText}}</text>
+      </view>
+      <text class="total-tip">订单由村内工坊与合作社承接，收益按约定回流农户；成长经验会同步到 V 等级与徽章。</text>
+    </view>
+
+    <view class="bottom-placeholder"></view>
+    <view class="bottom-bar">
+      <view class="bar-total">
+        <text class="bar-label">{{paymentTypeText}}</text>
+        <text class="bar-value">{{totalText}}</text>
+      </view>
+      <button class="submit-button" loading="{{submitting}}" disabled="{{submitting || !canSubmit}}" bindtap="submit">{{paymentType === 'points' ? '确认兑换' : '提交订单'}}</button>
+    </view>
+  </block>
+</view>

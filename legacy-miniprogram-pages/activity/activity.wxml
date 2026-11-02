@@ -1,0 +1,86 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty activity-state">活动详情正在展开...</view>
+  <view wx:elif="{{errorMessage}}" class="empty activity-state">{{errorMessage}}</view>
+
+  <block wx:elif="{{activity}}">
+    <view class="activity-hero stage">
+      <image class="activity-cover" src="{{activity.coverSrc}}" mode="aspectFill" />
+      <view class="activity-veil"></view>
+      <view class="activity-glow glow"></view>
+      <view class="activity-head">
+        <view class="seal">{{activity.category}}</view>
+        <view class="activity-title">{{activity.title}}</view>
+        <view class="activity-sub">{{activity.startTimeText}} · {{activity.venue}}</view>
+      </view>
+    </view>
+
+    <view class="info-card paper-card">
+      <view class="info-row">
+        <text class="info-label">活动时间</text>
+        <text class="info-value">{{activity.startTimeText}} - {{activity.endTimeText}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">活动地点</text>
+        <text class="info-value">{{activity.venue}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">活动费用</text>
+        <text class="info-value price">{{activity.priceText}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">剩余名额</text>
+        <text class="info-value">{{activity.remaining}} / {{activity.capacity}} 位</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">活动介绍</text>
+          <view class="section-title">这段研学做什么</view>
+        </view>
+      </view>
+      <view class="body-card paper-card">
+        <view class="body-text">{{activity.content || activity.description}}</view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{activity.highlights.length}}">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">活动亮点</text>
+          <view class="section-title">你会带走什么</view>
+        </view>
+      </view>
+      <view class="body-card paper-card">
+        <view wx:for="{{activity.highlights}}" wx:key="*this" class="highlight">
+          <view class="highlight-mark"></view>
+          <text class="highlight-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{activity.notice}}">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">参与须知</text>
+          <view class="section-title">预约前请确认</view>
+        </view>
+      </view>
+      <view class="body-card paper-card">
+        <view class="body-text muted">{{activity.notice}}</view>
+      </view>
+    </view>
+
+    <view class="booking-bar">
+      <view class="booking-price">
+        <text class="booking-price-value">{{activity.priceText}}</text>
+        <text class="booking-price-hint">剩 {{activity.remaining}} 位</text>
+      </view>
+      <button class="booking-button" disabled="{{activity.bookingDisabled}}" bindtap="onBook">
+        {{activity.bookingDisabled ? '名额已满' : '立即预约'}}
+      </button>
+    </view>
+    <view class="booking-placeholder"></view>
+  </block>
+</view>

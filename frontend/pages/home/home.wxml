@@ -1,0 +1,214 @@
+<view class="page home-page">
+  <view class="home-hero">
+    <view class="home-topbar">
+      <view class="brand-lockup">
+        <view class="brand-mark">湘</view>
+        <view class="brand-copy">
+          <text class="brand-name">红映湘村</text>
+          <text class="brand-sub">湘潭 · 红色村落数字文旅</text>
+        </view>
+      </view>
+      <view class="topbar-tools">
+        <view class="round-tool cart-tool" bindtap="goCart">
+          <image src="/assets/icons/cart.png" mode="aspectFit" />
+          <text wx:if="{{cartCount > 0}}" class="tool-badge">{{cartCount}}</text>
+        </view>
+        <view class="round-tool profile-tool" bindtap="goProfile">我的</view>
+      </view>
+    </view>
+
+    <swiper class="hero-swiper" autoplay circular interval="5200" indicator-dots indicator-color="rgba(255,255,255,.55)" indicator-active-color="#B32A2A">
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <image class="hero-image" src="{{item.imageSrc}}" mode="aspectFill" data-id="{{item.id}}" bindtap="onBannerTap" />
+        <view class="hero-shade"></view>
+        <view class="hero-copy">
+          <text class="hero-kicker">湘村风物 · 红色记忆</text>
+          <text class="hero-title">{{item.title}}</text>
+          <text class="hero-subtitle">{{item.subtitle}}</text>
+          <text class="hero-cta">去看看 ›</text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <view class="member-card card">
+    <view class="member-head">
+      <view class="member-level">
+        <text class="member-level-mark">{{profile.levelText}}</text>
+        <text class="member-level-title">{{profile.levelName}}</text>
+        <text class="member-level-tip">{{profile.nextLevelText}}</text>
+      </view>
+      <text class="member-upgrade" bindtap="goProfile">去升级 ›</text>
+    </view>
+    <view class="member-main">
+      <view class="member-avatar">湘</view>
+      <view class="member-user">
+        <text class="member-name">{{profile.nickname || '湘村体验者'}}</text>
+        <text class="member-note">{{profile.experienceText}} · 每一次出发，都值得被记住</text>
+      </view>
+    </view>
+    <view class="member-growth">
+      <view class="growth-copy"><text>成长进度</text><text>{{profile.experience}} / {{profile.nextLevelExp || profile.experience}} 经验</text></view>
+      <view class="progress"><view class="progress-inner" style="{{profile.progressStyle}}"></view></view>
+    </view>
+    <view class="member-stats">
+      <view class="member-stat"><text class="member-stat-num">{{profile.points}}</text><text class="member-stat-label">积分</text></view>
+      <view class="member-stat"><text class="member-stat-num">{{profile.coupons}}</text><text class="member-stat-label">优惠券</text></view>
+      <view class="member-stat"><text class="member-stat-num">{{cartCount}}</text><text class="member-stat-label">购物车</text></view>
+    </view>
+  </view>
+
+  <view class="section medal-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">红迹成长</text>
+        <view class="section-title">我的徽章</view>
+      </view>
+      <text class="more" bindtap="goMedals">已点亮 {{unlockedCount}} 枚 ›</text>
+    </view>
+    <scroll-view wx:if="{{medals.length}}" class="medal-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="medal-row">
+        <view wx:for="{{medals}}" wx:key="id" class="home-medal card {{item.unlocked ? 'unlocked' : 'locked'}}" data-id="{{item.id}}" bindtap="onMedalTap">
+          <image class="home-medal-image" src="{{item.coverSrc || item.iconSrc}}" mode="aspectFill" />
+          <view wx:if="{{!item.unlocked}}" class="home-medal-lock">待解锁</view>
+          <text class="home-medal-name">{{item.name}}</text>
+          <text class="home-medal-progress">{{item.progressText}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view wx:else class="empty home-medal-empty" bindtap="goMedals">完成研学打卡或购买文创，点亮你的第一枚徽章 ›</view>
+  </view>
+
+  <view class="section service-section">
+    <view class="section-head compact-head">
+      <view>
+        <text class="eyebrow">逛逛附近</text>
+        <view class="section-title">湘村服务，一站到位</view>
+      </view>
+      <text class="more" bindtap="goGuide">全部服务 ›</text>
+    </view>
+    <view class="service-card card">
+      <view wx:for="{{serviceItems}}" wx:key="key" class="service-item" data-key="{{item.key}}" bindtap="onQuickTap">
+        <view wx:if="{{index > 0}}" class="service-divider"></view>
+        <view class="service-icon service-{{item.key}}">{{item.icon}}</view>
+        <text class="service-title">{{item.title}}</text>
+        <text class="service-sub">{{item.sub}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section benefits-section">
+    <view class="benefit-card card">
+      <view class="benefit-head">
+        <text class="benefit-title">湘村服务</text>
+      </view>
+      <view class="benefit-list">
+        <view wx:for="{{benefits}}" wx:key="key" class="benefit-item" data-key="{{item.key}}" bindtap="onBenefitTap">
+          <view class="benefit-icon">{{item.icon}}</view>
+          <text class="benefit-name">{{item.title}}</text>
+          <text class="benefit-sub">{{item.sub}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section honor-section">
+    <view class="honor-card card" bindtap="goStudy">
+      <view class="honor-head">
+        <view class="honor-title-wrap"><text class="honor-emblem">章</text><text class="honor-title">荣誉徽章</text></view>
+        <text class="honor-count">已获得 <text>1</text> 枚 ›</text>
+      </view>
+      <view class="honor-body">
+        <view class="honor-medal">湘</view>
+        <view class="honor-copy">
+          <text class="honor-name">首访韶山村</text>
+          <text class="honor-sub">完成一次红色村落探访即可点亮</text>
+          <text class="honor-action">去研学打卡 ›</text>
+        </view>
+        <text class="honor-progress">进度 <text>0/1</text></text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section feature-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">红色村落</text>
+        <view class="section-title">湘潭六村红迹</view>
+      </view>
+      <text class="more" bindtap="goVillages">全部 ›</text>
+    </view>
+    <scroll-view class="village-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="village-row">
+        <view wx:for="{{villages}}" wx:key="id" class="village-card card" data-id="{{item.id}}" bindtap="onVillage">
+          <image class="village-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+          <view class="village-body">
+            <text class="village-name">{{item.name}}</text>
+            <text class="village-region">{{item.region}}</text>
+            <view class="village-stats"><text>景点 {{item.spotCount}}</text><text>故事 {{item.storyCount}}</text></view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section feature-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">红文创</text>
+        <view class="section-title">把湘潭带回家</view>
+      </view>
+      <text class="more" bindtap="goMall">进商城 ›</text>
+    </view>
+    <scroll-view class="product-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="product-row">
+        <view wx:for="{{products}}" wx:key="id" class="product-card card" data-id="{{item.id}}" bindtap="onProduct">
+          <image class="product-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+          <view class="product-body">
+            <text class="product-name">{{item.name}}</text>
+            <view class="product-tags"><text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</text></view>
+            <view class="product-price"><text class="price">{{item.priceText}}</text><text class="product-sales">已售 {{item.salesText}}</text></view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section feature-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">助农帮扶</text>
+        <view class="section-title">订单分给村民</view>
+      </view>
+      <text class="more" bindtap="goFarm">专区 ›</text>
+    </view>
+    <view class="farm-card card">
+      <view class="farm-card-copy"><text class="farm-card-title">湘村好物，带走一份土地的心意</text><text class="farm-card-sub">每一笔订单都会回到合作农户与村内工坊</text></view>
+      <view class="farm-stats">
+        <view class="farm-stat"><text class="farm-num">{{farmSummary.farmers}}</text><text class="farm-label">合作农户</text></view>
+        <view class="farm-stat"><text class="farm-num">{{farmSummary.products}}</text><text class="farm-label">助农产品</text></view>
+        <view class="farm-stat"><text class="farm-num">{{farmSummary.supportCount}}</text><text class="farm-label">订单支持</text></view>
+      </view>
+      <view class="farmer-list">
+        <view wx:for="{{farmers}}" wx:key="id" class="farmer-item"><image class="farmer-avatar" src="{{item.avatarSrc}}" mode="aspectFill" /><view class="farmer-info"><text class="farmer-name">{{item.name}}</text><text class="farmer-project">{{item.project}}</text></view></view>
+      </view>
+      <button class="primary-button farm-button" bindtap="goFarm">去助农专区</button>
+    </view>
+  </view>
+
+  <view class="section feature-section">
+    <view class="section-head">
+      <view><text class="eyebrow">红迹故事</text><view class="section-title">扫码读一段历史</view></view>
+      <text class="more" bindtap="goStories">更多 ›</text>
+    </view>
+    <view class="story-list">
+      <view wx:for="{{stories}}" wx:key="id" class="story-item card" data-id="{{item.id}}" bindtap="onStory"><image class="story-cover" src="{{item.coverSrc}}" mode="aspectFill" /><view class="story-body"><text class="story-title">{{item.title}}</text><text class="story-sub">{{item.category}} · {{item.era}}</text><text class="story-summary">{{item.summary}}</text></view></view>
+    </view>
+  </view>
+
+  <view class="section feature-section">
+    <view class="study-banner card" bindtap="goStudy"><view><text class="study-title">六村红色研学任务已上线</text><text class="study-sub">现场探访 · 史料研读 · 写生实践 · 小组协作</text></view><text class="study-action">开始研学 ›</text></view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty home-empty">内容加载中…</view>
+</view>

@@ -1,0 +1,157 @@
+.village-hero {
+  position: relative;
+  height: 560rpx;
+}
+
+.village-cover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.village-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 60rpx;
+}
+
+.action-row {
+  display: flex;
+  gap: 20rpx;
+  margin: -40rpx 32rpx 0;
+  position: relative;
+  z-index: 2;
+}
+
+.action-item {
+  flex: 1;
+  padding: 22rpx 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  box-shadow: var(--shadow-card);
+  color: var(--red);
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.body-text {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--ink-2);
+  font-size: 26rpx;
+  line-height: 44rpx;
+}
+
+.spot-list,
+.story-list,
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.spot-item,
+.story-item,
+.product-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx;
+}
+
+.spot-cover,
+.story-cover,
+.product-cover {
+  flex-shrink: 0;
+  width: 180rpx;
+  height: 160rpx;
+  border-radius: var(--radius-sm);
+  background: var(--paper-deep);
+}
+
+.spot-info,
+.story-info,
+.product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.spot-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.spot-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink);
+  font-size: 29rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+}
+
+.spot-category {
+  flex-shrink: 0;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  background: rgba(179, 42, 42, 0.1);
+  color: var(--red);
+  font-size: 20rpx;
+}
+
+.spot-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 10rpx;
+  color: var(--ink-2);
+  font-size: 24rpx;
+  line-height: 36rpx;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.story-title {
+  display: block;
+  color: var(--ink);
+  font-size: 29rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+}
+
+.story-sub {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--red);
+  font-size: 22rpx;
+}
+
+.product-name {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 27rpx;
+  line-height: 38rpx;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.product-info .price {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+}
+
+.village-state {
+  margin: 32rpx;
+}

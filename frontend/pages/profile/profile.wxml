@@ -1,0 +1,163 @@
+<view class="page profile-page">
+  <view class="member-hero">
+    <view class="member-hero-top">
+      <view class="avatar">红</view>
+      <view class="member-user">
+        <text class="member-name">{{profile.nickname}}</text>
+        <text class="member-code">红映湘村体验者 · {{userKey}}</text>
+      </view>
+      <view class="member-level">{{profile.levelText}}<text>{{profile.levelName}}</text></view>
+    </view>
+    <view class="member-progress-head">
+      <text>成长经验</text>
+      <text>{{profile.progressText}}</text>
+    </view>
+    <view class="progress member-progress"><view class="progress-inner" style="{{profile.progressStyle}}"></view></view>
+    <text class="member-next">{{profile.nextLevelText}}</text>
+  </view>
+
+  <view class="member-stats card">
+    <view class="member-stat">
+      <text class="member-stat-num">{{profile.points}}</text>
+      <text class="member-stat-label">积分</text>
+    </view>
+    <view class="member-stat">
+      <text class="member-stat-num">{{profile.coupons}}</text>
+      <text class="member-stat-label">优惠券</text>
+    </view>
+    <view class="member-stat">
+      <text class="member-stat-num">{{profile.balanceText}}</text>
+      <text class="member-stat-label">余额</text>
+    </view>
+  </view>
+
+  <view class="quick-card card">
+    <view class="quick-item" bindtap="goCart">
+      <text class="quick-icon">购</text>
+      <text class="quick-title">购物车</text>
+      <text class="quick-sub">{{cartCount}} 件待结算</text>
+    </view>
+    <view class="quick-item" bindtap="goAddress">
+      <text class="quick-icon">址</text>
+      <text class="quick-title">收货地址</text>
+      <text class="quick-sub">{{addressCount}} 个地址</text>
+    </view>
+    <view class="quick-item" bindtap="goStudy">
+      <text class="quick-icon">研</text>
+      <text class="quick-title">去打卡</text>
+      <text class="quick-sub">完成任务得积分</text>
+    </view>
+  </view>
+
+  <view class="section profile-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">荣誉成长</text>
+        <text class="section-title">我的徽章</text>
+      </view>
+      <text class="more" bindtap="goMedals">共 {{unlockedMedals.length}} 枚 ›</text>
+    </view>
+    <view wx:if="{{unlockedMedals.length === 0}}" class="medal-empty-card card" bindtap="goMedals">
+      <text class="medal-empty-icon">✦</text>
+      <view>
+        <text class="medal-empty-title">完成第一次打卡，点亮你的红迹</text>
+        <text class="medal-empty-sub">研学打卡、购买商品都会记录成长</text>
+      </view>
+      <text class="medal-empty-arrow">›</text>
+    </view>
+    <scroll-view wx:else class="medal-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="medal-row">
+        <view wx:for="{{unlockedMedals}}" wx:key="id" class="mini-medal" data-id="{{item.id}}" bindtap="openMedal">
+          <image class="mini-medal-image" src="{{item.iconSrc}}" mode="aspectFill" />
+          <text class="mini-medal-name">{{item.name}}</text>
+        </view>
+        <view class="mini-medal more-medal" bindtap="goMedals">
+          <view class="more-medal-icon">＋</view>
+          <text class="mini-medal-name">全部徽章</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="section profile-section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">账户记录</text>
+        <text class="section-title">我的成长档案</text>
+      </view>
+      <text wx:if="{{activeTab === 'orders'}}" class="more" bindtap="goLedger">看积分流水 ›</text>
+    </view>
+    <view class="tabs card">
+      <view wx:for="{{tabs}}" wx:key="key" class="tab {{activeTab === item.key ? 'active' : ''}}" data-key="{{item.key}}" bindtap="onTab">{{item.title}}</view>
+    </view>
+
+    <block wx:if="{{activeTab === 'orders'}}">
+      <view wx:if="{{orders.length === 0}}" class="empty profile-empty">
+        <text>还没有订单，去商城挑一件湘村好物吧。</text>
+        <button class="primary-button empty-button" bindtap="goMall">进入红文创商城</button>
+      </view>
+      <view wx:else class="order-list">
+        <view wx:for="{{orders}}" wx:key="id" class="order-card card">
+          <view class="order-head">
+            <text class="order-no">{{item.orderNo}}</text>
+            <text class="order-payment">{{item.paymentTypeText}}</text>
+            <text class="order-status">{{item.status}}</text>
+          </view>
+          <view wx:for="{{item.items}}" wx:for-item="row" wx:key="productId" class="order-item">
+            <text class="order-name">{{row.name}} × {{row.quantity}}</text>
+            <text class="order-price">{{row.priceText}}</text>
+          </view>
+          <view class="order-foot">
+            <text class="order-time">{{item.createdAtText}}</text>
+            <view class="order-total-wrap">
+              <text class="order-reward" wx:if="{{item.rewardText}}">{{item.rewardText}}</text>
+              <text class="order-total">合计 {{item.totalText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{activeTab === 'checkins'}}">
+      <view wx:if="{{records.length === 0}}" class="empty profile-empty">
+        <text>还没有打卡记录，去研学页领取第一个任务。</text>
+        <button class="primary-button empty-button" bindtap="goStudy">开始研学打卡</button>
+      </view>
+      <view wx:else class="record-list card">
+        <view wx:for="{{records}}" wx:key="id" class="record-item">
+          <view class="record-head">
+            <text class="record-title">{{item.taskTitle}}</text>
+            <text class="record-points">+{{item.points}} 积分</text>
+          </view>
+          <text class="record-note">{{item.note}}</text>
+          <text class="record-time">{{item.createdAt}}</text>
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{activeTab === 'ledger'}}">
+      <view wx:if="{{ledger.length === 0}}" class="empty profile-empty">
+        <text>完成研学打卡或购买商品后，这里会记录每一笔积分变化。</text>
+      </view>
+      <view wx:else class="ledger-list card">
+        <view wx:for="{{ledger}}" wx:key="id" class="ledger-item">
+          <view class="ledger-copy">
+            <text class="ledger-description">{{item.description}}</text>
+            <text class="ledger-time">{{item.createdAtText}}</text>
+          </view>
+          <view class="ledger-value-wrap">
+            <text class="ledger-value {{item.changeClass}}">{{item.changeText}}</text>
+            <text class="ledger-balance">余额 {{item.balanceAfter}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <block wx:if="{{activeTab === 'favorites'}}">
+      <view class="empty profile-empty">
+        <text>收藏功能已开放：在商品、故事和村落详情页点击收藏即可保存。</text>
+        <button class="primary-button empty-button" bindtap="goMall">去逛逛红文创</button>
+      </view>
+    </block>
+  </view>
+</view>

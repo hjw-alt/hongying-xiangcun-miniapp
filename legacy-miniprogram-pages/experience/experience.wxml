@@ -1,0 +1,249 @@
+<view class="page">
+  <view class="exp-hero stage">
+    <image class="exp-hero-bg" src="{{headerImage}}" mode="aspectFill" />
+    <view class="exp-hero-veil"></view>
+    <view class="exp-hero-glow glow"></view>
+    <view class="exp-hero-body">
+      <view class="seal">非遗体验</view>
+      <view class="exp-title">{{headerTitle}}</view>
+      <view class="exp-sub">{{headerSub}}</view>
+    </view>
+  </view>
+
+  <view class="fold">
+    <view wx:for="{{tabs}}" wx:key="key" class="fold-item {{activeTab === item.key ? 'active' : ''}}" data-tab="{{item.key}}" bindtap="onTabTap">
+      <text class="fold-index">{{index + 1}}</text>
+      <text class="fold-text">{{item.title}}</text>
+    </view>
+  </view>
+
+  <block wx:if="{{activeTab === 'online'}}">
+    <view class="theatre-block stage">
+      <view class="theatre-glow glow"></view>
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">幕布已拉开</text>
+          <view class="section-title">影戏剧场</view>
+        </view>
+      </view>
+      <view class="screen-wrap">
+        <video wx:if="{{activeClip}}" id="stage" class="player" src="{{activeClip.videoSrc}}" poster="{{activeClip.posterUrl}}" controls object-fit="contain"></video>
+        <view wx:else class="empty theatre-empty">还没有剧目，上传第一段纸影戏片段。</view>
+      </view>
+      <view wx:if="{{activeClip}}" class="now-playing">
+        <text class="now-title">{{activeClip.title}}</text>
+        <text class="now-sub">{{activeClip.uploader}} · {{activeClip.likes}} 次喝彩</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">剧目单</text>
+          <view class="section-title">共 {{clips.length}} 出戏</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="clip-list">
+      <view wx:if="{{clips.length === 0}}" class="empty clip-empty">剧目正在排演，稍后再来听戏。</view>
+      <view wx:for="{{clips}}" wx:key="id" class="clip-row paper-card" data-id="{{item.id}}" bindtap="onPlayClip">
+        <view class="clip-frame">
+          <image src="{{item.posterUrl}}" mode="aspectFill" />
+          <view class="clip-play">▶</view>
+        </view>
+        <view class="item-info">
+          <text class="item-title">{{item.title}}</text>
+          <text class="item-sub">{{item.uploader}} · {{item.createdAtText}}</text>
+          <view class="item-actions">
+            <text data-id="{{item.id}}" catchtap="likeClip">{{item.likes}} 赞</text>
+            <text data-id="{{item.id}}" catchtap="favoriteClip">{{favState[item.id] ? '已收藏' : '收藏'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{activeTab === 'ar'}}">
+    <view class="panel">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">入戏一步</text>
+          <view class="section-title">拍照生成纸影戏</view>
+        </view>
+      </view>
+      <view class="ar-step">第一步 · 拍下自己或一张照片，背景越干净，影偶轮廓越清楚。</view>
+      <view class="camera-wrap">
+        <camera wx:if="{{!cameraError && !photoReady}}" device-position="front" flash="off" resolution="medium" binderror="onCameraError" class="camera">
+          <cover-view class="ar-overlay">
+            <cover-view class="ar-face"></cover-view>
+            <cover-view class="ar-crown"></cover-view>
+            <cover-view class="ar-side left"></cover-view>
+            <cover-view class="ar-side right"></cover-view>
+          </cover-view>
+        </camera>
+        <block wx:else>
+          <image wx:if="{{photoTemp}}" class="camera" src="{{photoTemp}}" mode="aspectFill"></image>
+          <view wx:else class="camera-empty">相机不可用，选择一张照片也能体验纸影轮廓</view>
+          <view wx:if="{{photoTemp}}" class="ar-overlay-static">
+            <view class="ar-face"></view>
+            <view class="ar-crown"></view>
+            <view class="ar-side left"></view>
+            <view class="ar-side right"></view>
+          </view>
+        </block>
+        <view class="cam-corner tl"></view>
+        <view class="cam-corner tr"></view>
+        <view class="cam-corner bl"></view>
+        <view class="cam-corner br"></view>
+      </view>
+      <view class="ar-tip">{{photoReady ? '照片已就位，选一个身段就能生成纸影戏。' : '把脸放进轮廓，拍下一张正面或半侧面的照片。'}}</view>
+      <view class="ar-step">第二步 · 挑一个身段动作</view>
+      <view class="preset-row">
+        <view
+          wx:for="{{presets}}"
+          wx:key="*this"
+          class="preset {{selectedPreset === item ? 'active' : ''}}"
+          data-preset="{{item}}"
+          bindtap="onPresetSelect"
+        >{{item}}</view>
+      </view>
+      <view class="ar-step">第三步 · 选影调（纸影原为彩色影窗，墨影是老照片式的单色玩法）</view>
+      <view class="preset-row">
+        <view
+          wx:for="{{modes}}"
+          wx:key="*this"
+          class="preset {{selectedMode === item ? 'active' : ''}}"
+          data-mode="{{item}}"
+          bindtap="onModeSelect"
+        >{{item}}</view>
+      </view>
+      <input value="{{playTitle}}" bindinput="onPlayTitle" placeholder="给这段影戏起个名（可留空）" maxlength="30" />
+      <input value="{{arAuthor}}" bindinput="onARAuthor" placeholder="署名（可留空）" />
+      <view class="button-row">
+        <button class="ghost-button" bindtap="takePhoto">{{photoReady ? '重拍' : (cameraError ? '选择照片' : '拍照')}}</button>
+        <button class="primary" loading="{{generatingPlay}}" disabled="{{generatingPlay || !photoReady}}" bindtap="generatePlay">生成纸影戏</button>
+      </view>
+    </view>
+
+    <view wx:if="{{currentPlay}}" class="panel play-panel">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">生成结果</text>
+          <view class="section-title">{{currentPlay.title}}</view>
+        </view>
+        <text class="play-badge">{{currentPlay.preset}}</text>
+      </view>
+      <view class="play-stage">
+        <image class="play-gif" src="{{currentPlay.gifSrc}}" mode="aspectFit" />
+        <view class="play-glow glow"></view>
+      </view>
+      <view class="play-meta">{{currentPlay.mode}} · {{currentPlay.author}} · {{currentPlay.frames}} 帧 · {{currentPlay.createdAtText}}</view>
+      <view class="play-hint">这段影戏由你的照片提取影偶轮廓后逐帧合成，幕布、灯光、操纵杆和身段动作都是程序生成的。</view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">影戏箱</text>
+          <view class="section-title">我生成的影戏 · {{myPlays.length}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="play-list">
+      <view wx:if="{{myPlays.length === 0}}" class="empty">还没有生成记录，拍一张照片试试。</view>
+      <view wx:for="{{myPlays}}" wx:key="id" class="play-row paper-card" data-id="{{item.id}}" bindtap="selectPlay">
+        <image class="play-thumb" src="{{item.posterSrc}}" mode="aspectFill" />
+        <view class="play-info">
+          <text class="play-title">{{item.title}}</text>
+          <text class="play-sub">{{item.mode}} · {{item.preset}} · {{item.frames}} 帧</text>
+          <text class="play-sub">{{item.createdAtText}}</text>
+        </view>
+        <view class="play-delete" data-id="{{item.id}}" catchtap="deletePlay">删除</view>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{activeTab === 'diy'}}">
+    <view class="panel">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">工坊手作</text>
+          <view class="section-title">简易纸影人四步</view>
+        </view>
+      </view>
+      <view class="step-rail">
+        <view wx:for="{{diySteps}}" wx:key="title" class="step">
+          <view class="step-rail-col">
+            <text class="step-no">{{index + 1}}</text>
+            <view class="step-line"></view>
+          </view>
+          <view class="step-body">
+            <text class="step-title">{{item.title}}</text>
+            <text class="step-text">{{item.text}}</text>
+          </view>
+        </view>
+      </view>
+      <image wx:if="{{diyImage}}" class="preview" src="{{diyImage}}" mode="aspectFit" />
+      <input value="{{diyAuthor}}" bindinput="onDIYAuthor" placeholder="署名（可留空）" />
+      <view class="button-row">
+        <button class="ghost-button" bindtap="chooseDIYImage">选择作品图</button>
+        <button class="primary" loading="{{savingDIY}}" disabled="{{savingDIY}}" bindtap="saveDIYWork">上传作品</button>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{activeTab === 'events'}}">
+    <view class="section">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">线下相见</text>
+          <view class="section-title">研学 / 活动预约</view>
+        </view>
+      </view>
+    </view>
+    <view class="event-list">
+      <view wx:if="{{activities.length === 0}}" class="empty">活动正在筹备中。</view>
+      <view wx:for="{{activities}}" wx:key="id" class="event paper-card" data-id="{{item.id}}" bindtap="openActivityDetail">
+        <image class="event-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+        <view class="event-body">
+          <text class="category">{{item.category}}</text>
+          <text class="event-title">{{item.title}}</text>
+          <text class="event-sub">{{item.startTimeText}}</text>
+          <text class="event-sub">{{item.venue}}</text>
+          <view class="event-foot">
+            <text class="event-price">{{item.priceText}} · 剩 {{item.remaining}} 位</text>
+            <view class="event-actions">
+              <text class="event-detail">详情 ›</text>
+              <button size="mini" disabled="{{item.bookingDisabled}}" data-id="{{item.id}}" catchtap="openBooking">{{item.bookingDisabled ? '已满' : '预约'}}</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{bookingVisible}}" class="modal-mask" bindtap="closeBooking">
+    <view class="modal" catchtap="noop">
+      <view class="modal-handle"></view>
+      <view class="section-title">预约 · {{selectedActivity.title}}</view>
+      <view class="modal-sub">{{selectedActivity.startTimeText}} · {{selectedActivity.venue}}</view>
+      <input value="{{bookingForm.name}}" data-key="name" bindinput="onBookingField" placeholder="联系人姓名" />
+      <input value="{{bookingForm.phone}}" data-key="phone" bindinput="onBookingField" type="number" placeholder="手机号" />
+      <view class="people">
+        <text>预约人数</text>
+        <view class="stepper">
+          <button size="mini" data-type="minus" bindtap="changeParticipants">-</button>
+          <text class="stepper-value">{{bookingForm.participants}}</text>
+          <button size="mini" data-type="add" bindtap="changeParticipants">+</button>
+        </view>
+      </view>
+      <view class="order-line">
+        <text>预计费用</text>
+        <text class="fee">{{selectedActivity.priceCents * bookingForm.participants === 0 ? '免费' : '¥' + selectedActivity.priceCents * bookingForm.participants / 100}}</text>
+      </view>
+      <view class="order-tip">下单后保留名额，现场核验并完成缴费。</view>
+      <button class="primary-button" loading="{{submittingBooking}}" disabled="{{submittingBooking}}" bindtap="submitBooking">确认预约</button>
+    </view>
+  </view>
+</view>

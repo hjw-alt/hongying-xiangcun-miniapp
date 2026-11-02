@@ -1,0 +1,35 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.exe
+*.exe~
+/backend/shadowart-backend
+/backend/shadowart-backend-linux
+
+# Local runtime data
+*.log
+*.pid
+/backend/static/uploads/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+/frontend/project.private.config.json
+
+# Local archives, deployment bundles, and temporary files
+/.archive/
+/.deploy/
+/tmp/
+/tools/workbench/
+__pycache__/
+*.py[cod]
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

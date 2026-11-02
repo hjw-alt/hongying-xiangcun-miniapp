@@ -1,0 +1,230 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin: 24rpx 32rpx 0;
+  padding: 12rpx;
+  background: var(--surface);
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  height: 72rpx;
+  padding: 0 20rpx;
+  border-radius: var(--radius-sm);
+  background: var(--surface-warm);
+  font-size: 25rpx;
+}
+
+.search-button {
+  flex-shrink: 0;
+  width: 132rpx;
+  height: 72rpx;
+  line-height: 70rpx;
+  background: var(--red);
+  color: #FFF6E8;
+  font-size: 25rpx;
+}
+
+.map {
+  width: 100%;
+  height: 520rpx;
+  margin-top: 24rpx;
+}
+
+.route-list,
+.village-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.route-card {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx;
+}
+
+.route-cover {
+  flex-shrink: 0;
+  width: 190rpx;
+  height: 160rpx;
+  border-radius: var(--radius-sm);
+}
+
+.route-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.route-name {
+  display: block;
+  color: var(--ink);
+  font-size: 29rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+}
+
+.route-meta {
+  display: block;
+  margin-top: 6rpx;
+  color: var(--red);
+  font-size: 22rpx;
+  line-height: 32rpx;
+}
+
+.route-spots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 10rpx;
+}
+
+.route-spots .tag {
+  font-size: 19rpx;
+  line-height: 28rpx;
+  padding: 2rpx 10rpx;
+}
+
+.village-card {
+  overflow: hidden;
+}
+
+.village-cover {
+  width: 100%;
+  height: 300rpx;
+  background: var(--paper-deep);
+}
+
+.village-body {
+  padding: 24rpx;
+}
+
+.village-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.village-name {
+  color: var(--ink);
+  font-size: 34rpx;
+  line-height: 46rpx;
+  font-weight: 700;
+  font-family: "Songti SC", "STSong", serif;
+}
+
+.village-region {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 22rpx;
+}
+
+.village-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 10rpx;
+  color: var(--ink-2);
+  font-size: 25rpx;
+  line-height: 38rpx;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.village-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 14rpx;
+}
+
+.village-stats {
+  display: flex;
+  gap: 26rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--line-soft);
+  color: var(--muted);
+  font-size: 22rpx;
+}
+
+.modal-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(46, 33, 25, 0.46);
+}
+
+.modal {
+  width: 100%;
+  /* 预留自定义 tabBar 的高度，避免底部按钮被遮挡 */
+  padding: 34rpx 32rpx calc(112rpx + env(safe-area-inset-bottom));
+  border-radius: 28rpx 28rpx 0 0;
+  background: var(--surface);
+  max-height: 84vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  display: block;
+  color: var(--red-deep);
+  font-size: 36rpx;
+  line-height: 48rpx;
+  font-weight: 700;
+  font-family: "Songti SC", "STSong", serif;
+}
+
+.modal-sub {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--red);
+  font-size: 23rpx;
+}
+
+.modal-body {
+  display: block;
+  margin-top: 14rpx;
+  color: var(--ink-2);
+  font-size: 25rpx;
+  line-height: 40rpx;
+}
+
+.modal-spots {
+  margin: 22rpx 0;
+}
+
+.modal-spot {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid var(--line-soft);
+}
+
+.spot-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(179, 42, 42, 0.1);
+  color: var(--red);
+  font-size: 22rpx;
+}
+
+.spot-name {
+  flex: 1;
+  color: var(--ink);
+  font-size: 26rpx;
+}

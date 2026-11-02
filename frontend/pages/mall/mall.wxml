@@ -1,0 +1,88 @@
+<view class="page mall-page">
+  <view class="mall-topbar">
+    <view class="mall-brand">
+      <text class="mall-brand-title">红文创商城</text>
+      <text class="mall-brand-divider">|</text>
+      <text class="mall-brand-sub">湘村好物 · 快递到家</text>
+    </view>
+    <view class="mall-top-tools">
+      <view class="mall-cart" bindtap="goCart">
+        <image src="/assets/icons/cart-red.png" mode="aspectFit" />
+        <text wx:if="{{cartCount > 0}}" class="mall-cart-badge">{{cartCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="search-bar">
+    <view class="search-icon"></view>
+    <input value="{{keyword}}" placeholder="搜索关键词找到心仪好物吧~" bindinput="onKeyword" bindconfirm="onSearch" confirm-type="search" />
+    <view class="search-button" bindtap="onSearch">搜索</view>
+  </view>
+
+  <view class="mall-service-strip">
+    <view class="mall-service-item"><text class="mall-service-dot">✓</text><text>官方精选</text></view>
+    <view class="mall-service-item"><text class="mall-service-dot">✓</text><text>助农好物</text></view>
+    <view class="mall-service-item"><text class="mall-service-dot">✓</text><text>顺丰快递</text></view>
+    <view class="mall-service-item"><text class="mall-service-dot">✓</text><text>售后无忧</text></view>
+  </view>
+
+  <view class="points-strip card" bindtap="goProfile">
+    <view class="points-strip-icon">积分</view>
+    <view class="points-strip-copy">
+      <text class="points-strip-title">我的积分 {{profile.points}}</text>
+      <text class="points-strip-sub">{{profile.levelText}} · {{profile.levelName}} · 兑换湘村好物还能成长</text>
+    </view>
+    <text class="points-strip-arrow">去看看 ›</text>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x show-scrollbar="{{false}}">
+    <view class="chip-row">
+      <view wx:for="{{categories}}" wx:key="*this" class="chip {{category === item ? 'active' : ''}}" data-value="{{item}}" bindtap="onCategory">{{item}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="sort-row">
+    <view wx:for="{{sorts}}" wx:key="key" class="sort-item {{sort === item.key ? 'active' : ''}}" data-value="{{item.key}}" bindtap="onSort">{{item.label}}<text wx:if="{{item.key === 'price'}}" class="sort-arrow">↕</text></view>
+    <text class="sort-count">共 {{products.length}} 件</text>
+  </view>
+
+  <view class="farm-entry card" bindtap="goFarm">
+    <view class="farm-entry-seal">助农</view>
+    <view class="farm-entry-text">
+      <text class="farm-entry-title">一单一份湘村心意</text>
+      <text class="farm-entry-sub">湘莲 · 茶油 · 竹编 · 剁辣椒，每一单都分给村里</text>
+    </view>
+    <text class="farm-entry-action">去看看 ›</text>
+  </view>
+
+  <view class="mall-title-row">
+    <view><text class="mall-eyebrow">今日精选</text><text class="mall-title">把湘潭带回家</text></view>
+    <text class="mall-title-note">会员价 · 限时好礼</text>
+  </view>
+
+  <view wx:if="{{loading && products.length === 0}}" class="empty mall-empty">商品加载中…</view>
+  <view wx:elif="{{products.length === 0}}" class="empty mall-empty">没有找到相关商品</view>
+  <view wx:else class="product-grid">
+    <view wx:for="{{products}}" wx:key="id" class="product-item card" data-id="{{item.id}}" bindtap="onProduct">
+      <view class="product-image-wrap">
+        <image class="product-image" src="{{item.coverSrc}}" mode="aspectFill" />
+        <text class="product-corner">{{item.category === '湘村风物助农' ? '助农好物' : '精选文创'}}</text>
+        <text wx:if="{{item.pointsPrice > 0}}" class="product-points-badge">可兑 {{item.pointsPrice}} 积分</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <view class="product-tags"><text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</text></view>
+        <view class="product-foot">
+          <view class="product-price"><text class="price-label">会员价</text><text class="price">{{item.priceText}}</text><text wx:if="{{item.originalText}}" class="price-old">{{item.originalText}}</text></view>
+          <view class="add-button {{item.stock <= 0 ? 'disabled' : ''}}" data-id="{{item.id}}" catchtap="addToCart">{{item.stock > 0 ? '+' : '缺货'}}</view>
+        </view>
+        <view class="product-reward-row">
+          <text wx:if="{{item.rewardPoints > 0}}">现金购 +{{item.rewardPoints}} 积分</text>
+          <text wx:if="{{item.rewardExp > 0}}">成长 +{{item.rewardExp}} 经验</text>
+        </view>
+        <text class="product-sales">已售 {{item.salesText}} · {{item.stock > 0 ? '现货' : '暂时缺货'}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+

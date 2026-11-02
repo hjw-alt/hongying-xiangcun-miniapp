@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/mall/mall",
+    "pages/guide/guide",
+    "pages/story/story",
+    "pages/study/study",
+    "pages/farm/farm",
+    "pages/product/product",
+    "pages/cart/cart",
+    "pages/checkout/checkout",
+    "pages/address/address",
+    "pages/village/village",
+    "pages/story-detail/story-detail",
+    "pages/profile/profile",
+    "pages/medals/medals",
+    "pages/medal-detail/medal-detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F7F1E8",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "红映湘村",
+    "backgroundColor": "#F7F1E8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#9A8578",
+    "selectedColor": "#B32A2A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/tabbar-red/home.png",
+        "selectedIconPath": "assets/tabbar-red/home-active.png"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "红文创",
+        "iconPath": "assets/tabbar-red/mall.png",
+        "selectedIconPath": "assets/tabbar-red/mall-active.png"
+      },
+      {
+        "pagePath": "pages/guide/guide",
+        "text": "导览",
+        "iconPath": "assets/tabbar-red/guide.png",
+        "selectedIconPath": "assets/tabbar-red/guide-active.png"
+      },
+      {
+        "pagePath": "pages/story/story",
+        "text": "红迹",
+        "iconPath": "assets/tabbar-red/story.png",
+        "selectedIconPath": "assets/tabbar-red/story-active.png"
+      },
+      {
+        "pagePath": "pages/study/study",
+        "text": "研学",
+        "iconPath": "assets/tabbar-red/study.png",
+        "selectedIconPath": "assets/tabbar-red/study-active.png"
+      },
+      {
+        "pagePath": "pages/farm/farm",
+        "text": "助农",
+        "iconPath": "assets/tabbar-red/farm.png",
+        "selectedIconPath": "assets/tabbar-red/farm-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

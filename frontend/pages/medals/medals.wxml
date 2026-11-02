@@ -1,0 +1,47 @@
+<view class="page medals-page">
+  <view class="medal-hero">
+    <view class="hero-seal">红迹</view>
+    <view class="medal-hero-copy">
+      <text class="eyebrow light">成长勋章</text>
+      <text class="medal-hero-title">把每一次出发，收藏成光</text>
+      <text class="medal-hero-sub">完成研学打卡、支持湘村好物，就能点亮专属徽章。</text>
+    </view>
+    <view class="medal-summary">
+      <text class="medal-summary-num">{{unlockedCount}}</text>
+      <text class="medal-summary-label">/{{medals.length}} 已点亮</text>
+    </view>
+  </view>
+
+  <view wx:if="{{profile}}" class="growth-card card">
+    <view class="growth-head">
+      <view>
+        <text class="growth-level">{{profile.levelText}} · {{profile.levelName}}</text>
+        <text class="growth-exp">{{profile.experienceText}}</text>
+      </view>
+      <text class="growth-link" bindtap="goProfile">我的成长 ›</text>
+    </view>
+    <view class="progress"><view class="progress-inner" style="{{profile.progressStyle}}"></view></view>
+    <text class="growth-tip">{{profile.nextLevelText}}</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty medal-empty">徽章加载中…</view>
+  <view wx:elif="{{medals.length === 0}}" class="empty medal-empty">暂时还没有可领取的徽章</view>
+  <view wx:else class="medal-grid">
+    <view wx:for="{{medals}}" wx:key="id" class="medal-card card {{item.unlocked ? 'unlocked' : 'locked'}}" data-id="{{item.id}}" bindtap="openDetail">
+      <view class="medal-cover-wrap">
+        <image class="medal-cover" src="{{item.coverSrc || item.iconSrc}}" mode="aspectFill" />
+        <view wx:if="{{!item.unlocked}}" class="medal-mask"><text>未点亮</text></view>
+        <view wx:else class="medal-state">已点亮</view>
+      </view>
+      <view class="medal-body">
+        <text class="medal-name">{{item.name}}</text>
+        <text class="medal-subtitle">{{item.subtitle}}</text>
+        <view class="medal-progress-row">
+          <view class="progress medal-progress"><view class="progress-inner" style="{{item.progressStyle}}"></view></view>
+          <text class="medal-progress-text">{{item.progressText}}</text>
+        </view>
+        <text class="medal-condition">{{item.unlocked ? (item.unlockedAtText || '已达成') : '点击查看解锁条件'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

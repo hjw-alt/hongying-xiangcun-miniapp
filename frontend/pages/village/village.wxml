@@ -1,0 +1,89 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty village-state">加载中…</view>
+  <block wx:elif="{{village}}">
+    <view class="hero village-hero">
+      <image class="village-cover" src="{{village.coverSrc}}" mode="aspectFill" />
+      <view class="hero-veil"></view>
+      <view class="hero-body village-body">
+        <view class="seal">{{village.region}}</view>
+        <view class="hero-title">{{village.name}}</view>
+        <view class="hero-sub">{{village.honorText}}</view>
+      </view>
+    </view>
+
+    <view class="action-row">
+      <view class="action-item" bindtap="onFavorite">{{favorited ? '已收藏' : '收藏村落'}}</view>
+      <view class="action-item" bindtap="openLocation">导航前往</view>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">村落概况</text>
+      <text class="body-text">{{village.summary}}</text>
+      <view class="tag-row">
+        <text wx:for="{{village.themes}}" wx:key="*this" class="tag tag-red">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">历史脉络</text>
+      <text class="body-text">{{village.history}}</text>
+    </view>
+
+    <view class="section" wx:if="{{spots.length}}">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">红色点位</text>
+          <view class="section-title">共 {{spots.length}} 处</view>
+        </view>
+      </view>
+      <view class="spot-list">
+        <view wx:for="{{spots}}" wx:key="id" class="spot-item card">
+          <image class="spot-cover" src="{{item.imageSrc}}" mode="aspectFill" />
+          <view class="spot-info">
+            <view class="spot-head">
+              <text class="spot-name">{{item.name}}</text>
+              <text class="spot-category">{{item.category}}</text>
+            </view>
+            <text class="spot-summary">{{item.summary}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{stories.length}}">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">红迹故事</text>
+          <view class="section-title">这个村的故事</view>
+        </view>
+      </view>
+      <view class="story-list">
+        <view wx:for="{{stories}}" wx:key="id" class="story-item card" data-id="{{item.id}}" bindtap="onStory">
+          <image class="story-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+          <view class="story-info">
+            <text class="story-title">{{item.title}}</text>
+            <text class="story-sub">{{item.category}} · {{item.era}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{products.length}}">
+      <view class="section-head">
+        <view>
+          <text class="eyebrow">本村好物</text>
+          <view class="section-title">文创与农产品</view>
+        </view>
+      </view>
+      <view class="product-list">
+        <view wx:for="{{products}}" wx:key="id" class="product-item card" data-id="{{item.id}}" bindtap="onProduct">
+          <image class="product-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+          <view class="product-info">
+            <text class="product-name">{{item.name}}</text>
+            <text class="price">{{item.priceText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,364 @@
+.growth-strip {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin: 24rpx 32rpx 0;
+  padding: 18rpx 22rpx;
+  background: linear-gradient(120deg, #9a2928 0%, #bd7146 100%);
+  border: 0;
+  box-shadow: var(--shadow-float);
+}
+
+.growth-strip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58rpx;
+  height: 58rpx;
+  border: 2rpx solid rgba(255, 246, 232, 0.8);
+  border-radius: 50%;
+  color: #fff6e8;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.growth-strip-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.growth-strip-title,
+.growth-strip-sub {
+  display: block;
+  overflow: hidden;
+  color: #fff6e8;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.growth-strip-title {
+  font-size: 25rpx;
+  font-weight: 600;
+}
+
+.growth-strip-sub {
+  margin-top: 4rpx;
+  color: rgba(255, 246, 232, 0.78);
+  font-size: 20rpx;
+}
+
+.address-card {
+  position: relative;
+  margin: 24rpx 32rpx 0;
+  padding: 28rpx 60rpx 28rpx 28rpx;
+}
+
+.address-head {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.address-name {
+  color: var(--ink);
+  font-size: 30rpx;
+  line-height: 42rpx;
+  font-weight: 700;
+}
+
+.address-phone {
+  color: var(--ink-2);
+  font-size: 26rpx;
+}
+
+.address-badge {
+  padding: 4rpx 12rpx;
+  border-radius: 999rpx;
+  background: rgba(179, 42, 42, 0.1);
+  color: var(--red);
+  font-size: 20rpx;
+}
+
+.address-detail {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--ink-2);
+  font-size: 26rpx;
+  line-height: 40rpx;
+}
+
+.address-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.address-empty-title {
+  color: var(--ink);
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.address-empty-sub {
+  color: var(--muted);
+  font-size: 23rpx;
+}
+
+.address-arrow {
+  position: absolute;
+  right: 28rpx;
+  top: 50%;
+  margin-top: -22rpx;
+  color: var(--muted);
+  font-size: 36rpx;
+}
+
+.item-list {
+  margin-top: 12rpx;
+}
+
+.order-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid var(--line-soft);
+}
+
+.order-item:last-child {
+  border-bottom: 0;
+}
+
+.item-cover {
+  flex-shrink: 0;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: var(--radius-sm);
+  background: var(--paper-deep);
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 27rpx;
+  line-height: 38rpx;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.item-custom {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--gold);
+  font-size: 22rpx;
+}
+
+.item-farmer {
+  display: block;
+  margin-top: 6rpx;
+  color: var(--muted);
+  font-size: 21rpx;
+}
+
+.item-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+
+.item-foot .price {
+  display: block;
+  font-size: 29rpx;
+}
+
+.item-points {
+  display: block;
+  margin-top: 2rpx;
+  color: var(--gold);
+  font-size: 20rpx;
+}
+
+.item-qty {
+  color: var(--muted);
+  font-size: 24rpx;
+}
+
+.payment-panel {
+  padding: 26rpx;
+}
+
+.payment-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.payment-title {
+  display: block;
+  margin-top: 6rpx;
+  color: var(--ink);
+  font-size: 29rpx;
+  font-family: "Songti SC", "STSong", serif;
+  font-weight: 700;
+}
+
+.payment-points {
+  color: var(--red);
+  font-size: 21rpx;
+}
+
+.payment-switch {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 18rpx;
+}
+
+.payment-option {
+  flex: 1;
+  min-width: 0;
+  padding: 18rpx;
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-warm);
+}
+
+.payment-option.active {
+  border-color: var(--red);
+  background: rgba(179, 42, 42, 0.07);
+  box-shadow: inset 0 0 0 2rpx rgba(179, 42, 42, 0.08);
+}
+
+.payment-option.disabled {
+  opacity: 0.52;
+}
+
+.payment-option-title,
+.payment-option-value,
+.payment-option-sub {
+  display: block;
+}
+
+.payment-option-title {
+  color: var(--ink-2);
+  font-size: 22rpx;
+}
+
+.payment-option-value {
+  margin-top: 4rpx;
+  color: var(--red);
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.payment-option-sub {
+  margin-top: 4rpx;
+  color: var(--muted);
+  font-size: 19rpx;
+  line-height: 29rpx;
+}
+
+.payment-hint {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--muted);
+  font-size: 21rpx;
+  line-height: 32rpx;
+}
+
+.remark {
+  width: 100%;
+  height: 150rpx;
+  margin-top: 12rpx;
+  padding: 18rpx;
+  border: 1rpx solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-warm);
+  font-size: 25rpx;
+  line-height: 38rpx;
+}
+
+.total-panel {
+  padding-bottom: 24rpx;
+}
+
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink-2);
+  font-size: 26rpx;
+}
+
+.total-value {
+  color: var(--red);
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.total-tip {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--muted);
+  font-size: 22rpx;
+  line-height: 34rpx;
+}
+
+.bottom-placeholder {
+  height: 170rpx;
+}
+
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 18rpx 32rpx calc(18rpx + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.97);
+  border-top: 1rpx solid var(--line);
+}
+
+.bar-total {
+  flex: 1;
+  min-width: 0;
+}
+
+.bar-label {
+  display: block;
+  color: var(--muted);
+  font-size: 22rpx;
+}
+
+.bar-value {
+  display: block;
+  color: var(--red);
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.submit-button {
+  flex-shrink: 0;
+  width: 260rpx;
+  height: 84rpx;
+  line-height: 82rpx;
+  background: linear-gradient(180deg, #C13A32 0%, #8C1F1F 100%);
+  color: #FFF6E8;
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.checkout-state {
+  margin: 24rpx 32rpx 0;
+}

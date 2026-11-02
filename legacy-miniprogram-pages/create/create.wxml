@@ -1,0 +1,65 @@
+<view class="page">
+  <view class="create-hero stage">
+    <image class="create-hero-bg" src="{{heroImage}}" mode="aspectFill" />
+    <view class="create-hero-veil"></view>
+    <view class="create-hero-body">
+      <view class="seal">创作投稿</view>
+      <view class="create-title">{{editingId ? '修改作品' : '上传新作品'}}</view>
+      <view class="create-sub">把影偶纹样、戏台光影和你的画法留在这里</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <view wx:if="{{editingId}}" class="editing-tip">正在编辑参赛作品 <text bindtap="removeEditState">退出编辑</text></view>
+
+    <view class="field">
+      <text class="field-label">作品名称</text>
+      <input value="{{form.title}}" data-key="title" bindinput="onFieldInput" placeholder="例如：谷雨后的第一场插秧" maxlength="40" />
+    </view>
+
+    <view class="field">
+      <text class="field-label">作者</text>
+      <input value="{{form.author}}" data-key="author" bindinput="onFieldInput" placeholder="填写真实姓名或团队名" maxlength="30" />
+    </view>
+
+    <view class="field">
+      <text class="field-label">作品分类</text>
+      <view class="theme-select">
+        <view
+          wx:for="{{themes}}"
+          wx:key="*this"
+          class="theme-option {{form.theme === item ? 'active' : ''}}"
+          data-theme="{{item}}"
+          bindtap="onThemeSelect"
+        >{{item}}</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">作品介绍</text>
+      <textarea value="{{form.description}}" data-key="description" bindinput="onFieldInput" placeholder="写一写参考的影偶纹样、戏台地点、剧目片段或创作转化思路。" maxlength="500" />
+      <view class="counter">{{form.description.length}}/500</view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">标签</text>
+      <input value="{{form.tagsText}}" data-key="tagsText" bindinput="onFieldInput" placeholder="穆桂英 镂空纹样 湘潭纸影，最多 6 个" />
+    </view>
+
+    <view class="field">
+      <text class="field-label">作品图片</text>
+      <view class="upload-box {{coverUrl ? 'has-image' : ''}}" bindtap="chooseImage">
+        <image wx:if="{{coverUrl}}" src="{{coverUrl}}" mode="aspectFill" />
+        <view wx:else class="upload-hint">
+          <view class="plus">+</view>
+          <view>选择或拍摄作品</view>
+          <view class="sub">支持 JPG / PNG / WEBP，最大 8MB</view>
+        </view>
+      </view>
+    </view>
+
+    <button class="submit" loading="{{submitting}}" disabled="{{submitting}}" bindtap="save">
+      {{editingId ? '保存修改' : '发布到影绘廊'}}
+    </button>
+  </view>
+</view>

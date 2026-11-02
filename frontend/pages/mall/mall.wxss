@@ -1,0 +1,579 @@
+.mall-page {
+  background: #f7f7f6;
+}
+
+.mall-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  padding: 24rpx 28rpx 18rpx;
+  background: #fffaf4;
+}
+
+.mall-brand {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.mall-brand-title {
+  color: var(--ink);
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 36rpx;
+  line-height: 48rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.mall-brand-divider {
+  margin: 0 12rpx;
+  color: #cbbfb4;
+  font-size: 26rpx;
+}
+
+.mall-brand-sub {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 21rpx;
+  line-height: 30rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mall-top-tools {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.mall-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64rpx;
+  height: 64rpx;
+  border: 1rpx solid #eadfd5;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.mall-cart {
+  position: relative;
+}
+
+.mall-cart image {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.mall-cart-badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 30rpx;
+  height: 30rpx;
+  padding: 0 7rpx;
+  border-radius: 999rpx;
+  background: var(--red);
+  color: #fff;
+  font-size: 18rpx;
+  line-height: 30rpx;
+  text-align: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin: 6rpx 28rpx 0;
+  padding: 8rpx 10rpx 8rpx 22rpx;
+  border: 1rpx solid #b8a398;
+  border-radius: 999rpx;
+  background: #fff;
+}
+
+.search-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 28rpx;
+  height: 28rpx;
+  border: 3rpx solid #987e70;
+  border-radius: 50%;
+}
+
+.search-icon::after {
+  position: absolute;
+  right: -12rpx;
+  bottom: -8rpx;
+  width: 13rpx;
+  height: 3rpx;
+  border-radius: 3rpx;
+  background: #987e70;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  height: 66rpx;
+  color: var(--ink);
+  font-size: 24rpx;
+}
+
+.search-button {
+  flex-shrink: 0;
+  padding: 12rpx 20rpx;
+  border-radius: 999rpx;
+  background: var(--red);
+  color: #fff8ef;
+  font-size: 22rpx;
+  line-height: 30rpx;
+}
+
+.mall-service-strip {
+  display: flex;
+  justify-content: space-between;
+  margin: 18rpx 28rpx 0;
+  padding: 14rpx 18rpx;
+  border-radius: 14rpx;
+  background: #fffaf4;
+  color: var(--muted);
+  font-size: 19rpx;
+  line-height: 26rpx;
+}
+
+.mall-service-item {
+  display: flex;
+  align-items: center;
+  gap: 5rpx;
+}
+
+.mall-service-dot {
+  color: var(--red);
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.points-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin: 18rpx 28rpx 0;
+  padding: 18rpx 16rpx;
+  border: 1rpx solid #F0DCC0;
+  border-radius: 20rpx;
+  background: linear-gradient(120deg, #FFFBF3 0%, #FFF3DF 100%);
+  box-shadow: 0 10rpx 22rpx rgba(126, 27, 27, 0.07);
+  overflow: hidden;
+}
+
+.points-strip::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8rpx;
+  background: linear-gradient(180deg, #C13A32 0%, #8C1F1F 100%);
+  content: "";
+}
+
+.points-strip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64rpx;
+  height: 64rpx;
+  border: 1rpx solid rgba(255, 231, 192, 0.85);
+  border-radius: 16rpx;
+  background: linear-gradient(150deg, #C13A32 0%, #8C1F1F 100%);
+  color: #FFF8EF;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 21rpx;
+  font-weight: 700;
+  box-shadow: 0 6rpx 14rpx rgba(140, 31, 31, 0.22);
+}
+
+.points-strip-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4rpx;
+}
+
+.points-strip-title {
+  overflow: hidden;
+  color: #8C1F1F;
+  font-size: 26rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.points-strip-sub {
+  display: block;
+  overflow: hidden;
+  color: #96755B;
+  font-size: 20rpx;
+  line-height: 29rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.points-strip-arrow {
+  flex-shrink: 0;
+  padding: 8rpx 13rpx;
+  border-radius: 999rpx;
+  background: rgba(179, 42, 42, 0.08);
+  color: var(--red);
+  font-size: 19rpx;
+  line-height: 27rpx;
+}
+
+.category-scroll {
+  margin: 18rpx 0 0;
+  padding: 0 28rpx;
+  white-space: nowrap;
+}
+
+.chip-row {
+  display: inline-flex;
+  gap: 12rpx;
+}
+
+.chip {
+  padding: 10rpx 20rpx;
+  border: 1rpx solid #e8ddd4;
+  border-radius: 999rpx;
+  background: #fff;
+  color: var(--ink-2);
+  font-size: 22rpx;
+  line-height: 30rpx;
+}
+
+.chip.active {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff8ef;
+  font-weight: 600;
+}
+
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  margin: 20rpx 28rpx 0;
+  padding-bottom: 14rpx;
+  border-bottom: 1rpx solid #e9e3de;
+}
+
+.sort-item {
+  color: var(--muted);
+  font-size: 23rpx;
+  line-height: 32rpx;
+}
+
+.sort-item.active {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.sort-arrow {
+  margin-left: 4rpx;
+  font-size: 22rpx;
+}
+
+.sort-count {
+  margin-left: auto;
+  color: #b2a69c;
+  font-size: 20rpx;
+  line-height: 28rpx;
+}
+
+.farm-entry {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  margin: 18rpx 28rpx 0;
+  padding: 18rpx 16rpx;
+  border: 0;
+  border-radius: 18rpx;
+  background: linear-gradient(110deg, #b32a2a 0%, #cf7548 100%);
+  box-shadow: 0 8rpx 20rpx rgba(179, 42, 42, 0.16);
+}
+
+.farm-entry-seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64rpx;
+  height: 64rpx;
+  border: 2rpx solid rgba(255, 249, 239, 0.8);
+  border-radius: 50%;
+  color: #fff9ef;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 22rpx;
+  transform: rotate(-8deg);
+}
+
+.farm-entry-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.farm-entry-title {
+  display: block;
+  color: #fff9ef;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 26rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+}
+
+.farm-entry-sub {
+  display: block;
+  margin-top: 3rpx;
+  overflow: hidden;
+  color: rgba(255, 249, 239, 0.82);
+  font-size: 19rpx;
+  line-height: 28rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.farm-entry-action {
+  flex-shrink: 0;
+  color: #fff9ef;
+  font-size: 21rpx;
+  line-height: 30rpx;
+}
+
+.mall-title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin: 24rpx 28rpx 0;
+}
+
+.mall-eyebrow {
+  display: block;
+  color: var(--red);
+  font-size: 19rpx;
+  line-height: 26rpx;
+  letter-spacing: 3rpx;
+}
+
+.mall-title {
+  display: block;
+  margin-top: 3rpx;
+  color: var(--ink);
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 32rpx;
+  line-height: 44rpx;
+  font-weight: 700;
+}
+
+.mall-title-note {
+  color: var(--muted);
+  font-size: 19rpx;
+  line-height: 28rpx;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx;
+  margin: 16rpx 28rpx 0;
+}
+
+.product-item {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18rpx;
+  box-shadow: 0 6rpx 18rpx rgba(63, 45, 34, 0.08);
+}
+
+.product-image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #f5ebdd;
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 300rpx;
+  background: #f5ebdd;
+}
+
+.product-corner {
+  position: absolute;
+  left: 12rpx;
+  top: 12rpx;
+  padding: 5rpx 9rpx;
+  border-radius: 5rpx;
+  background: rgba(255, 250, 241, 0.9);
+  color: var(--red);
+  font-size: 17rpx;
+  line-height: 24rpx;
+}
+
+.product-points-badge {
+  position: absolute;
+  top: 12rpx;
+  right: 10rpx;
+  max-width: calc(100% - 24rpx);
+  padding: 6rpx 11rpx;
+  border: 1rpx solid rgba(255, 227, 178, 0.72);
+  border-radius: 999rpx;
+  background: linear-gradient(110deg, #C13A32 0%, #8C1F1F 100%);
+  box-shadow: 0 5rpx 12rpx rgba(90, 18, 18, 0.24);
+  color: #FFF8EF;
+  font-size: 17rpx;
+  line-height: 24rpx;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.product-info {
+  padding: 14rpx 14rpx 16rpx;
+}
+
+.product-name {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: 68rpx;
+  color: var(--ink);
+  font-size: 24rpx;
+  line-height: 34rpx;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.product-tags {
+  display: flex;
+  gap: 6rpx;
+  margin-top: 8rpx;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.product-tags .tag {
+  flex-shrink: 0;
+  padding: 3rpx 8rpx;
+  border: 1rpx solid #e8d6be;
+  border-radius: 5rpx;
+  background: #fffaf1;
+  color: #93683a;
+  font-size: 17rpx;
+  line-height: 23rpx;
+}
+
+.product-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+
+.product-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.price-label {
+  display: block;
+  width: 100%;
+  color: var(--red);
+  font-size: 17rpx;
+  line-height: 24rpx;
+}
+
+.product-price .price {
+  color: var(--red);
+  font-size: 29rpx;
+  line-height: 38rpx;
+  font-weight: 700;
+}
+
+.price-old {
+  margin-left: 8rpx;
+  color: #b9ada2;
+  font-size: 18rpx;
+  line-height: 28rpx;
+  text-decoration: line-through;
+}
+
+.product-reward-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6rpx;
+  margin-top: 10rpx;
+  color: #8A5C22;
+  font-size: 17rpx;
+  line-height: 26rpx;
+}
+
+.product-reward-row text {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 5rpx 7rpx;
+  border: 1rpx solid rgba(199, 154, 70, 0.34);
+  border-radius: 7rpx;
+  background: #FFF8E8;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.product-sales {
+  display: block;
+  margin-top: 6rpx;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 17rpx;
+  line-height: 24rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 54rpx;
+  height: 54rpx;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 34rpx;
+  line-height: 54rpx;
+  box-shadow: 0 5rpx 12rpx rgba(179, 42, 42, 0.22);
+}
+
+.add-button.disabled {
+  background: #c8c0b9;
+  font-size: 16rpx;
+  box-shadow: none;
+}
+
+.mall-empty {
+  margin: 24rpx 28rpx 0;
+}

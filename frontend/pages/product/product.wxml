@@ -1,0 +1,103 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty product-state">加载中…</view>
+  <block wx:elif="{{product}}">
+    <swiper class="gallery" indicator-dots circular>
+      <swiper-item wx:for="{{product.imageList}}" wx:key="*this">
+        <image class="gallery-image" src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <view class="info-card card">
+      <view class="price-row">
+        <text class="price-now">{{product.priceText}}</text>
+        <text wx:if="{{product.originalText}}" class="price-old">{{product.originalText}}</text>
+        <text class="sales">已售 {{product.salesText}}</text>
+      </view>
+      <text class="product-name">{{product.name}}</text>
+      <text class="product-summary">{{product.summary}}</text>
+      <view class="tag-row">
+        <text wx:for="{{product.tags}}" wx:key="*this" class="tag tag-red">{{item}}</text>
+      </view>
+    </view>
+
+    <view class="growth-strip card" bindtap="goProfile">
+      <view class="growth-strip-icon">V</view>
+      <view class="growth-strip-copy">
+        <text class="growth-strip-title">{{profile.levelText}} · {{profile.levelName}} · 当前 {{profile.points}} 积分</text>
+        <text class="growth-strip-sub">购买商品会记录成长经验，点亮更多湘村徽章</text>
+      </view>
+      <text class="growth-strip-arrow">我的成长 ›</text>
+    </view>
+
+    <view class="payment-panel panel">
+      <view class="panel-title-row">
+        <view>
+          <text class="eyebrow">选择支付方式</text>
+          <text class="panel-title">一份好物，两种心意</text>
+        </view>
+        <text class="current-points">可用 {{profile.points}} 积分</text>
+      </view>
+      <view class="payment-switch">
+        <view class="payment-option {{paymentType === 'cash' ? 'active' : ''}}" data-type="cash" bindtap="choosePayment">
+          <text class="payment-option-title">现金购买</text>
+          <text class="payment-option-value">{{subtotalText}}</text>
+          <text class="payment-option-sub">获得 +{{rewardPointsTotal}} 积分 · +{{rewardExpTotal}} 经验</text>
+        </view>
+        <view class="payment-option {{paymentType === 'points' ? 'active' : ''}} {{canPayPoints ? '' : 'disabled'}}" data-type="points" bindtap="choosePayment">
+          <text class="payment-option-title">积分兑换</text>
+          <text class="payment-option-value">{{pointsTotalText}}</text>
+          <text class="payment-option-sub">{{canPayPoints ? '兑换后仍可获得成长经验' : paymentHint}}</text>
+        </view>
+      </view>
+      <text class="payment-hint">{{paymentHint}}</text>
+    </view>
+
+    <view class="panel" wx:if="{{product.farmerName}}">
+      <text class="eyebrow">助农信息</text>
+      <text class="farmer-name">本单由 {{product.farmerName}} 承接</text>
+      <text class="farmer-note">订单将按件结算给合作农户与村内工坊，收益直接进入村民家庭。</text>
+    </view>
+
+    <view class="panel" wx:if="{{product.storyCard}}">
+      <text class="eyebrow">文创故事卡</text>
+      <text class="story-card-text">{{product.storyCard}}</text>
+    </view>
+
+    <view class="panel" wx:if="{{product.customizable}}">
+      <text class="eyebrow">DIY 定制</text>
+      <text class="custom-tip">请留下你希望写在商品上的内容，订单确认后由工坊与您沟通。</text>
+      <textarea class="custom-input" value="{{customText}}" placeholder="例如：姓名、祝福语或定制要求" maxlength="120" bindinput="onCustom" />
+    </view>
+
+    <view class="panel">
+      <view class="quantity-row">
+        <text class="quantity-label">购买数量</text>
+        <view class="stepper">
+          <view class="step-button" data-type="minus" bindtap="changeQuantity">−</view>
+          <text class="step-value">{{quantity}}</text>
+          <view class="step-button" data-type="add" bindtap="changeQuantity">＋</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">商品详情</text>
+      <text class="detail-text">{{product.detail}}</text>
+    </view>
+
+    <view class="bottom-placeholder"></view>
+    <view class="bottom-bar">
+      <view class="bar-icon" bindtap="goCart">
+        <image class="bar-icon-img" src="/assets/icons/cart.png" mode="aspectFit" />
+        <text wx:if="{{cartCount > 0}}" class="bar-badge">{{cartCount}}</text>
+      </view>
+      <view class="bar-icon" bindtap="onFavorite">
+        <image class="bar-icon-img" src="{{favorited ? '/assets/icons/starFilled.png' : '/assets/icons/star.png'}}" mode="aspectFit" />
+      </view>
+      <button class="cart-button" loading="{{adding}}" disabled="{{adding}}" bindtap="addToCart">加入购物车</button>
+      <button class="buy-button" disabled="{{product.stock <= 0}}" bindtap="buyNow">
+        {{product.stock > 0 ? paymentTypeText : '缺货'}}
+      </button>
+    </view>
+  </block>
+</view>

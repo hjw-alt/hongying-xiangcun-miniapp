@@ -1,0 +1,49 @@
+<view class="page">
+  <view wx:if="{{selectMode}}" class="tip">点击地址即可用于本次下单</view>
+
+  <view wx:if="{{loading}}" class="empty address-state">加载中…</view>
+  <view wx:elif="{{addresses.length === 0}}" class="empty address-state">
+    <text>还没有收货地址，添加一个吧。</text>
+  </view>
+  <view wx:else class="address-list">
+    <view
+      wx:for="{{addresses}}"
+      wx:key="id"
+      class="address-card card {{selectedId === item.id ? 'selected' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="onPick"
+    >
+      <view class="address-head">
+        <text class="address-name">{{item.receiver}}</text>
+        <text class="address-phone">{{item.phone}}</text>
+        <text wx:if="{{item.isDefault}}" class="address-badge">默认</text>
+      </view>
+      <text class="address-detail">{{item.region}} {{item.detail}}</text>
+      <view class="address-actions">
+        <text wx:if="{{!item.isDefault}}" class="address-action" data-id="{{item.id}}" catchtap="setDefault">设为默认</text>
+        <text class="address-action" data-id="{{item.id}}" catchtap="openEdit">编辑</text>
+        <text class="address-action danger" data-id="{{item.id}}" catchtap="removeAddress">删除</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="primary-button" bindtap="openCreate">新增收货地址</button>
+  </view>
+  <view class="bottom-placeholder"></view>
+
+  <view wx:if="{{formVisible}}" class="modal-mask" bindtap="closeForm">
+    <view class="modal" catchtap="noop">
+      <text class="modal-title">{{editingId ? '编辑地址' : '新增地址'}}</text>
+      <input value="{{form.receiver}}" data-key="receiver" placeholder="收货人姓名" maxlength="20" bindinput="onField" />
+      <input value="{{form.phone}}" data-key="phone" type="number" placeholder="手机号" maxlength="11" bindinput="onField" />
+      <input value="{{form.region}}" data-key="region" placeholder="省市区（如：湖南省湘潭市雨湖区）" maxlength="60" bindinput="onField" />
+      <input value="{{form.detail}}" data-key="detail" placeholder="详细地址（街道、门牌号）" maxlength="100" bindinput="onField" />
+      <view class="switch-row" bindtap="toggleDefault">
+        <text>设为默认地址</text>
+        <view class="switch {{form.isDefault ? 'on' : ''}}"><view class="switch-dot"></view></view>
+      </view>
+      <button class="primary-button" loading="{{submitting}}" disabled="{{submitting}}" bindtap="saveAddress">保存地址</button>
+    </view>
+  </view>
+</view>

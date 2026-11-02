@@ -1,0 +1,51 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty story-state">故事加载中…</view>
+  <block wx:elif="{{story}}">
+    <image class="cover" src="{{story.coverSrc}}" mode="aspectFill" />
+
+    <view class="head-card card">
+      <view class="head-tags">
+        <text class="tag tag-red">{{story.category}}</text>
+        <text class="head-era">{{story.era}}</text>
+      </view>
+      <text class="title">{{story.title}}</text>
+      <text class="meta">{{story.viewText}} 次阅读 · 数字故事</text>
+    </view>
+
+    <view class="panel">
+      <text class="eyebrow">故事正文</text>
+      <text class="content">{{story.content}}</text>
+    </view>
+
+    <view class="panel ar-panel" wx:if="{{story.arSrc}}">
+      <text class="eyebrow">AR 老照片</text>
+      <text class="ar-tip">扫描明信片或点击下方按钮，可以看到这座老建筑的数字复原画面。</text>
+      <image class="ar-preview" src="{{story.arSrc}}" mode="aspectFill" bindtap="openAR" />
+      <button class="ghost-button ar-button" bindtap="openAR">打开 AR 画面</button>
+    </view>
+
+    <view class="panel" wx:if="{{village}}">
+      <text class="eyebrow">故事发生地</text>
+      <view class="village-row" bindtap="goVillage">
+        <image class="village-cover" src="{{village.coverSrc}}" mode="aspectFill" />
+        <view class="village-info">
+          <text class="village-name">{{village.name}}</text>
+          <text class="village-region">{{village.region}}</text>
+        </view>
+        <text class="village-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="action-bar">
+      <button class="primary-button" bindtap="onFavorite">{{favorited ? '已收藏' : '收藏这个故事'}}</button>
+    </view>
+    <view class="action-placeholder"></view>
+
+    <view wx:if="{{arVisible}}" class="ar-mask" bindtap="closeAR">
+      <view class="ar-stage" catchtap="closeAR">
+        <image class="ar-image" src="{{story.arSrc}}" mode="aspectFit" />
+        <text class="ar-close">点击任意位置关闭</text>
+      </view>
+    </view>
+  </block>
+</view>

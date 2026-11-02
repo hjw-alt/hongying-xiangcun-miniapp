@@ -1,0 +1,81 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty cart-state">加载中…</view>
+  <view wx:elif="{{items.length === 0}}" class="empty cart-state">
+    <text>购物车还是空的，去挑几件文创或助农好物吧。</text>
+    <button class="primary-button empty-button" bindtap="goMall">去逛红文创</button>
+  </view>
+  <block wx:else>
+    <view class="cart-head card" bindtap="goProfile">
+      <view class="cart-head-icon">积</view>
+      <view class="cart-head-copy">
+        <text class="cart-head-title">{{profile.levelText}} · {{profile.levelName}} · {{profile.points}} 积分</text>
+        <text class="cart-head-sub">支持积分兑换的商品，可在结算时直接抵扣</text>
+      </view>
+      <text class="cart-head-arrow">成长 ›</text>
+    </view>
+
+    <view class="cart-list">
+      <view wx:for="{{items}}" wx:key="id" class="cart-item card">
+        <view class="check {{item.selected ? 'checked' : ''}}" data-id="{{item.id}}" bindtap="toggleItem"></view>
+        <image class="cart-cover" src="{{item.product.coverSrc}}" mode="aspectFill" />
+        <view class="cart-info">
+          <text class="cart-name">{{item.product.name}}</text>
+          <text wx:if="{{item.customText}}" class="cart-custom">定制：{{item.customText}}</text>
+          <text wx:if="{{item.product.farmerName}}" class="cart-farmer">{{item.product.farmerName}}</text>
+          <view class="cart-rewards">
+            <text wx:if="{{item.product.pointsPrice > 0}}">可兑 {{item.product.pointsPrice}} 积分</text>
+            <text wx:if="{{item.product.rewardExp > 0}}">成长 +{{item.product.rewardExp}} 经验</text>
+          </view>
+          <view class="cart-foot">
+            <view>
+              <text class="price">{{item.product.priceText}}</text>
+              <text wx:if="{{item.product.pointsPrice > 0}}" class="cart-points-price">{{item.product.pointsPrice}} 积分</text>
+            </view>
+            <view class="stepper">
+              <view class="step-button" data-id="{{item.id}}" data-type="minus" bindtap="changeQuantity">−</view>
+              <text class="step-value">{{item.quantity}}</text>
+              <view class="step-button" data-id="{{item.id}}" data-type="add" bindtap="changeQuantity">＋</view>
+            </view>
+          </view>
+          <text class="cart-remove" data-id="{{item.id}}" bindtap="removeItem">移除</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="payment-panel panel">
+      <view class="payment-head">
+        <view>
+          <text class="eyebrow">结算方式</text>
+          <text class="payment-title">选择你的湘村心意</text>
+        </view>
+        <text class="payment-points">可用 {{profile.points}} 积分</text>
+      </view>
+      <view class="payment-switch">
+        <view class="payment-option {{paymentType === 'cash' ? 'active' : ''}}" data-type="cash" bindtap="choosePayment">
+          <text class="payment-option-title">现金购买</text>
+          <text class="payment-option-value">{{cashTotalText}}</text>
+          <text class="payment-option-sub">+{{rewardPointsTotal}} 积分 · +{{rewardExpTotal}} 经验</text>
+        </view>
+        <view class="payment-option {{paymentType === 'points' ? 'active' : ''}} {{canPayPoints ? '' : 'disabled'}}" data-type="points" bindtap="choosePayment">
+          <text class="payment-option-title">积分兑换</text>
+          <text class="payment-option-value">{{pointsTotalText}}</text>
+          <text class="payment-option-sub">{{canPayPoints ? '兑换后获得成长经验' : paymentHint}}</text>
+        </view>
+      </view>
+      <text class="payment-hint">{{paymentHint}}</text>
+    </view>
+
+    <view class="bottom-placeholder"></view>
+    <view class="bottom-bar">
+      <view class="select-all" bindtap="toggleAll">
+        <view class="check {{allSelected ? 'checked' : ''}}"></view>
+        <text>全选</text>
+      </view>
+      <view class="total">
+        <text class="total-label">{{paymentTypeText}}</text>
+        <text class="total-value">{{totalText}}</text>
+      </view>
+      <button class="checkout-button" disabled="{{!canCheckout}}" bindtap="checkout">去结算({{selectedCount}})</button>
+    </view>
+  </block>
+</view>

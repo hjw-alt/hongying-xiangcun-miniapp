@@ -1,0 +1,124 @@
+<view class="page">
+  <view class="study-head">
+    <view class="study-head-copy">
+      <text class="eyebrow">湘村研学会员</text>
+      <text class="study-title">走进红色村落，留下你的红迹</text>
+      <text class="study-subtitle">完成现场任务即可获得积分、成长经验与专属徽章</text>
+    </view>
+    <view class="study-head-seal">研学<br />打卡</view>
+  </view>
+
+  <view class="points-card">
+    <view class="points-main">
+      <text class="points-num">{{points}}</text>
+      <text class="points-label">当前可用积分</text>
+    </view>
+    <view class="points-side">
+      <text class="points-level">{{profile.levelText}} · {{profile.levelName}}</text>
+      <text class="points-exp">成长 {{profile.experience}} 经验</text>
+      <text class="points-link" bindtap="goProfile">成长档案 ›</text>
+    </view>
+  </view>
+
+  <view class="study-benefits card">
+    <view class="benefit-item">
+      <text class="benefit-value">+积分</text>
+      <text class="benefit-label">完成任务</text>
+    </view>
+    <view class="benefit-divider"></view>
+    <view class="benefit-item">
+      <text class="benefit-value">+经验</text>
+      <text class="benefit-label">提升 V 等级</text>
+    </view>
+    <view class="benefit-divider"></view>
+    <view class="benefit-item" bindtap="goMedals">
+      <text class="benefit-value">{{medals.length}}</text>
+      <text class="benefit-label">枚徽章 ›</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">选择研学地</text>
+        <view class="section-title">按村落筛选任务</view>
+      </view>
+      <text class="more" bindtap="goMedals">我的徽章 ›</text>
+    </view>
+    <scroll-view class="village-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="chip-row">
+        <view class="chip {{villageId === '' ? 'active' : ''}}" data-id="" bindtap="onVillage">全部任务</view>
+        <view
+          wx:for="{{villages}}"
+          wx:key="id"
+          class="chip {{villageId === item.id ? 'active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="onVillage"
+        >{{item.name}}</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty task-empty">任务加载中…</view>
+  <view wx:elif="{{tasks.length === 0}}" class="empty task-empty">该村落暂无任务</view>
+  <view wx:else class="task-list">
+    <view
+      wx:for="{{tasks}}"
+      wx:key="id"
+      class="task-card card {{done[item.id] ? 'task-done' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="openTask"
+    >
+      <image class="task-cover" src="{{item.coverSrc}}" mode="aspectFill" />
+      <view class="task-body">
+        <view class="task-head">
+          <text class="task-type">{{item.type}}</text>
+          <view class="task-rewards">
+            <text class="task-points">{{item.pointText}}</text>
+            <text class="task-exp">{{item.expText}}</text>
+          </view>
+        </view>
+        <text class="task-title">{{item.title}}</text>
+        <text class="task-summary">{{item.summary}}</text>
+        <view class="task-foot">
+          <text class="task-state {{done[item.id] ? 'done' : ''}}">{{done[item.id] ? '已打卡 · 奖励已到账' : '去打卡领取奖励'}}</text>
+          <text class="task-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{records.length}}">
+    <view class="section-head">
+      <view>
+        <text class="eyebrow">打卡记录</text>
+        <view class="section-title">最近完成</view>
+      </view>
+      <text class="more" bindtap="goProfile">查看全部 ›</text>
+    </view>
+    <view class="record-list card">
+      <view wx:for="{{records}}" wx:key="id" class="record-item">
+        <view class="record-head">
+          <text class="record-title">{{item.taskTitle}}</text>
+          <text class="record-points">+{{item.points}} 分</text>
+        </view>
+        <text class="record-note">{{item.note}}</text>
+        <text class="record-time">{{item.createdAtText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTask}}" class="modal-mask" bindtap="closeTask">
+    <view class="modal" catchtap="noop">
+      <text class="modal-title">{{activeTask.title}}</text>
+      <text class="modal-sub">{{activeTask.type}} · {{activeTask.pointText}} · {{activeTask.expText}}</text>
+      <text class="modal-body">{{activeTask.summary}}</text>
+      <textarea class="modal-textarea" value="{{note}}" placeholder="写下你的打卡心得（必填）" maxlength="300" bindinput="onNote" />
+      <view class="photo-row" bindtap="choosePhoto">
+        <image wx:if="{{photoUrl}}" class="photo-preview" src="{{photoUrl}}" mode="aspectFill" />
+        <view wx:else class="photo-empty">+ 上传现场照片</view>
+      </view>
+      <button class="primary-button" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submitTask">提交打卡并领取奖励</button>
+    </view>
+  </view>
+</view>
